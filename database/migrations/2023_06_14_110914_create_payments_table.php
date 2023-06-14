@@ -9,7 +9,7 @@ class CreatePaymentsTable extends Migration {
 	{
 		Schema::create('payments', function(Blueprint $table) {
 			$table->increments('id');
-			$table->enum('type', array('paytab', 'paypal'));
+			$table->enum('type', array('paytab', 'paypal','stribe'));
 			$table->enum('status', array('successful', 'failed', 'pending'));
 			$table->string('transaction_id', 255)->unique();
 			$table->timestamps();
