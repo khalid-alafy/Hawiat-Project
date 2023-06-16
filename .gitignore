@@ -17,3 +17,8 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Swagger specific files to ignore
+/public/swagger-ui
+/storage/api-docs
+/resources/views/vendor/
