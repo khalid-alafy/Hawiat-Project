@@ -3,9 +3,10 @@
 
 namespace App\Http\Traits;
 
+use Illuminate\Http\Response;
 trait ApiDesignTrait
 {
-    public function ApiResponse ($code = 200, $message = null, $errors = null, $data = null)
+    public function ApiResponse ($code = 200, $message = null, $errors = null, $data = null) :Response
     {
         $array = [
             'status' => $code,
