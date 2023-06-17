@@ -9,7 +9,7 @@ class CreateForeignKeys extends Migration {
 	public function up()
 	{
 		Schema::table('branches', function(Blueprint $table) {
-			$table->foreign('compay_id')->references('id')->on('companies')
+			$table->foreign('company_id')->references('id')->on('companies')
 						->onDelete('cascade')
 						->onUpdate('cascade');
 		});
@@ -83,7 +83,7 @@ class CreateForeignKeys extends Migration {
 	public function down()
 	{
 		Schema::table('branches', function(Blueprint $table) {
-			$table->dropForeign('branches_compay_id_foreign');
+			$table->dropForeign('branches_company_id_foreign');
 		});
 		Schema::table('departments', function(Blueprint $table) {
 			$table->dropForeign('departments_parent_id_foreign');

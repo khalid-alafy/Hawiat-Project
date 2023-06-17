@@ -16,8 +16,8 @@ class CreateCompaniesTable extends Migration {
 			$table->string('phone', 10)->unique();
 			$table->string('password', 255);
 			$table->string('tax_record', 11)->unique();
-			$table->string('ciry', 100);
-			$table->string('location', 255);
+			$table->string('city', 100);
+			$table->point('location')->nullable();
 			$table->timestamps();
 		});
 	}
