@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use MatanYadaev\EloquentSpatial\Objects\Point;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
+
 
 class RegisterController extends Controller
 {
@@ -43,7 +45,7 @@ class RegisterController extends Controller
      */
     public function userRegister(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'name' => 'required|max:255|string',
             'phone' => 'required|min:10|max:14|string|unique:users',
             'password' => 'required|string|min:6',
@@ -51,6 +53,12 @@ class RegisterController extends Controller
             'email' => 'required|string|email|unique:users',
             'location' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
@@ -65,9 +73,9 @@ class RegisterController extends Controller
         $user = User::create($input);
 
         $success['token'] =  $user->createToken('API_Token')->plainTextToken;
-        $success['email'] =  $user->email;
+        $success['name'] =  $user->name;
 
-        return $this->ApiResponse(Response::HTTP_OK, $success['email']. ' registered successfully.', $success ['token']);
+        return $this->ApiResponse(Response::HTTP_OK, $success['name']. ' registered successfully.',null, $success ['token']);
     }
 
 /*
@@ -107,7 +115,7 @@ class RegisterController extends Controller
      */
     public function companyRegister(Request $request){
 
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'owner_name' => 'required',
             'email' => 'required|email|unique:companies',
@@ -119,7 +127,14 @@ class RegisterController extends Controller
             'city' => 'required',
             'location' => 'required',
         ]);
-
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+        
+        $validatedData= $request->all();
         $validatedData['password'] = Hash::make($validatedData['password']);
         $latitude = $validatedData['location']['latitude'];
         $longitude = $validatedData['location']['longitude'];
