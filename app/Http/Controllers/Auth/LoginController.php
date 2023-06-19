@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiDesignTrait;
 use App\Http\Traits\RepositoryTrait;
@@ -67,10 +68,11 @@ class LoginController extends  Controller
         return $this->login($request,$guard);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        $admin = auth('sanctum')->user();
-        $admin->tokens()->where('id', $admin->currentAccessToken()->id)->delete();
-        return $this->ApiResponse(Response::HTTP_OK, 'user logged out', null);
+        return Auth::guard('user')->user();
+        // $admin = auth('sanctum')->user();
+        // $admin->tokens()->where('id', $admin->currentAccessToken()->id)->delete();
+        // return $this->ApiResponse(Response::HTTP_OK, 'user logged out', null);
     }
 }
