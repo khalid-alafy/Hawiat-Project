@@ -30,7 +30,7 @@ Route::post('company/register',[RegisterController::class,'companyRegister']);
 Route::post('user/login', [LoginController::class, 'userLogin']);
 Route::post('company/login',[LoginController::class, 'companyLogin']);
 
-Route::post('logout',[LoginController::class,'logout']);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,7 @@ Route::post('logout',[LoginController::class,'logout']);
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('users',UserController::class);
+    Route::post('logout',[LoginController::class,'logout']);
 });
 /*
 |--------------------------------------------------------------------------

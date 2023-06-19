@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiDesignTrait;
 use App\Http\Traits\RepositoryTrait;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class LoginController extends  Controller
 {
@@ -68,11 +70,10 @@ class LoginController extends  Controller
         return $this->login($request,$guard);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        return Auth::guard('user')->user();
-        // $admin = auth('sanctum')->user();
-        // $admin->tokens()->where('id', $admin->currentAccessToken()->id)->delete();
-        // return $this->ApiResponse(Response::HTTP_OK, 'user logged out', null);
+        $admin = auth('sanctum')->user();
+        $admin->tokens()->where('id', $admin->currentAccessToken()->id)->delete();
+        return $this->ApiResponse(Response::HTTP_OK, 'user logged out successfully', null);
     }
 }
