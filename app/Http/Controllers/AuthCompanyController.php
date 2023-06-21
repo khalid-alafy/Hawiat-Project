@@ -6,6 +6,9 @@ use App\Http\Traits\ApiDesignTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Company;
+use App\Models\Branch;
+use App\Models\Complaint;
+use App\Models\Department;
 use MatanYadaev\EloquentSpatial\Objects\Point;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,5 +68,13 @@ class AuthCompanyController extends Controller
 
     public function logout(){
         return response()->json('this is my logout method');
+    }
+ 
+    public function test(){
+        // $company = Company::with('branches')->find(3);
+        // return response()->json($company);
+        $branch = Branch::with('departments','products')->find(1);
+        return response()->json($branch->products);
+
     }
 }
