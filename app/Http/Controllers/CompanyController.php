@@ -121,7 +121,7 @@ class CompanyController extends Controller
     $longitude = $validatedData['location']['longitude'];
     
     $validatedData['location'] = new Point($latitude, $longitude);
-    return $validatedData['location'];
+   
     $company->update($validatedData);
 
      return response()->json($company);

@@ -11,10 +11,10 @@ class CreateProductsTable extends Migration {
 			$table->increments('id');
 			$table->string('name', 255);
 			$table->string('image', 255)->nullable()->default('avatar.png');
-			$table->double('price');
+			$table->double('contract_price')->nullable();
+			$table->double('temporary_price')->nullable();
 			$table->string('volume', 255);
 			$table->text('description')->nullable();
-			$table->enum('tenancy_type', array('contract', 'temporary'));
 			$table->integer('branch_id')->unsigned();
 			$table->integer('department_id')->unsigned();
 			$table->timestamps();
