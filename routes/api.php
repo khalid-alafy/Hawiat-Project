@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthCompanyController;
 use App\Http\Controllers\CompanyController;
@@ -42,3 +43,14 @@ Route::post('/register',[AuthCompanyController::class,'register']);
 Route::post('/logout',[AuthCompanyController::class,'logout']);
 
 Route::apiResource('companies', CompanyController::class);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Branche API Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::apiResource('branches', BranchController::class);
