@@ -14,6 +14,7 @@ class Department extends Model
     public $timestamps = true;
     protected $fillable = [
         'name',
+        'tenancy_type',
         'parent_id',
     ];
 
