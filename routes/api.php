@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthCompanyController;
 use App\Http\Controllers\CompanyController;
 
 /*
@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | User API Routes
@@ -29,16 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 | User API routes for your application
 |
 */
+Route::apiResource('departments', DepartmentController::class);
+Route::get('department-products', [DepartmentController::class, 'departmentProducts'])->name('department_products');
+Route::get('department-branches', [DepartmentController::class, 'departmentBranches'])->name('department_branches');
 
-Route::get('users', [UserController::class, 'index'])->name('users.all');
-Route::post('users', [UserController::class, 'store'])->name('users.create');
-Route::get('users/{id}', [UserController::class, 'show'])->name('userss.user');
-Route::put('users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.delete');
-
-
-Route::post('/login',[AuthCompanyController::class,'login']);
-Route::post('/register',[AuthCompanyController::class,'register']);
-Route::post('/logout',[AuthCompanyController::class,'logout']);
-
-Route::apiResource('companies', CompanyController::class);
