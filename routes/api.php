@@ -69,4 +69,7 @@ Route::get('unauthorized', function () {
     ]);
 })->name('unauthorized');
 
+Route::apiResource('companies', CompanyController::class);
+
+Route::view('/test','checkingwebsockets');
 

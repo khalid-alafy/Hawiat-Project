@@ -53,6 +53,7 @@ class CompanyController extends Controller
         'tax_record' => 'required',
         'city' => 'required',
         'location' => 'required',
+        'bank_account_num' => 'required',
     ]);
 
       // Create a new company
@@ -62,7 +63,7 @@ class CompanyController extends Controller
       $longitude = $validatedData['location']['longitude'];
       
       $validatedData['location'] = new Point($latitude, $longitude);
-      
+      // return $validatedData;0
       $company = Company::create($validatedData);
  
       return response()->json($company, 201);
@@ -121,7 +122,7 @@ class CompanyController extends Controller
     $longitude = $validatedData['location']['longitude'];
     
     $validatedData['location'] = new Point($latitude, $longitude);
-    return $validatedData['location'];
+   
     $company->update($validatedData);
 
      return response()->json($company);

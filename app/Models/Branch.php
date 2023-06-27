@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use MatanYadaev\EloquentSpatial\Objects\Point;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class Branch extends Model 
 {
@@ -12,19 +17,26 @@ class Branch extends Model
     protected $table = 'branches';
     public $timestamps = true;
 
-    public function company()
+    protected $fillable = [
+        'name', 'location', 'company_id',
+    ];
+
+    protected $casts = [
+                'location' => Point::class,
+            ];
+    public function company():BelongsTo
     {
-        return $this->belongsTo('Company');
+        return $this->belongsTo(Company::class);
     }
 
-    public function products()
+    public function products():HasMany
     {
-        return $this->hasMany('Product');
+        return $this->hasMany(Product::class);
     }
 
-    public function departments()
+    public function departments():BelongsToMany
     {
-        return $this->belongsToMany('Deparment');
+        return $this->belongsToMany(Department::class);
     }
 
 }

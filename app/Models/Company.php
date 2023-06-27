@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use MatanYadaev\EloquentSpatial\Objects\Point;
 // use MatanYadaev\EloquentSpatial\Objects\Polygon;
 use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class Company extends Authenticatable 
@@ -28,6 +29,7 @@ class Company extends Authenticatable
         'tax_record',
         'city',
         'location',
+        'bank_account_num',
     ];
 
     protected $casts = [
@@ -36,24 +38,24 @@ class Company extends Authenticatable
 
     public $timestamps = true;
 
-    public function branches()
+    public function branches(): HasMany
     {
-        return $this->hasMany('Branch');
+        return $this->hasMany(Branch::class);
     }
 
-    public function complaints()
+    public function complaints(): HasMany
     {
-        return $this->hasMany('Complaint');
+        return $this->hasMany(Complaint::class);
     }
 
-    public function rates()
+    public function rates():HasMany
     {
-        return $this->hasMany('Rate');
+        return $this->hasMany(Rate::class);
     }
 
-    public function reviews()
+    public function reviews():HasMany
     {
-        return $this->hasMany('Review');
+        return $this->hasMany(Review::class);
     }
 
 }
