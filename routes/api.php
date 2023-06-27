@@ -42,3 +42,5 @@ Route::post('/register',[AuthCompanyController::class,'register']);
 Route::post('/logout',[AuthCompanyController::class,'logout']);
 
 Route::apiResource('companies', CompanyController::class);
+
+Route::view('/test','checkingwebsockets');
