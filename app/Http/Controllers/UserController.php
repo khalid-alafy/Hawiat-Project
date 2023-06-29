@@ -16,6 +16,36 @@ class UserController extends Controller
 {
     use ApiDesignTrait;
 
+
+    /**
+     * @OA\Post(
+     * path="/api/login",
+     * tags={"User"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    @OA\JsonContent(
+     *       required={"phone","password"},
+     *     @OA\Property(property="phone", type="string", example="0551234567"),
+     *     @OA\Property(property="password", type="password", example="password12345"),
+     *        )
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\Property(property="User", type="object", ref="#/components/schemas/User"),
+     *     ),
+     * )
+     */
+
+    public function login(Request $request)
+    {
+        $data = $request->all();
+        return $this->auth('user', $data);
+    }
+
+
+//        *      security={ {"sanctum": {} }},
+
     /**
      * @OA\Get(
      *      path="/api/users",
@@ -38,6 +68,7 @@ class UserController extends Controller
      */
     public function index(): Response
     {
+//        $user = auth('sanctum')->user(); // Authentication && authorization check
         try {
             $users = User::all();
             return $this->ApiResponse(Response::HTTP_OK, 'Successful operation', Null, $users);
@@ -74,23 +105,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
+        $validator = $request->validate([
             'name' => 'required|max:255|string',
             'phone' => 'required|min:10|max:14|string|unique:users',
             'password' => 'required|string|min:6',
+            'location' => 'required',
+            'image' => '',
             'email' => 'required|string|email|unique:users',
         ]);
-        $input = $request->all();
+
         try {
-            $input['password'] = Hash::make($input['password']);
-            if (!is_null($input['location']))
-            {
-                $latitude = $input['location']['latitude'];
-                $longitude = $input['location']['longitude'];
-                $input['location'] = new Point($latitude, $longitude);
-            }
-            $input['image'] = $this->imageCheck($input['image']);
-            User::create($input);
+            $validator['password'] = Hash::make('password');
+            $latitude = $validator['location']['latitude'];
+            $longitude = $validator['location']['longitude'];
+            $validator['location'] = new Point($latitude, $longitude);
+            $validator['image'] = $this->imageCheck($validator['image']);
+            User::create($validator);
         } catch (Exception $e) {
             return $this->ApiResponse(Response::HTTP_BAD_REQUEST, 'operation failed', null);
         }
@@ -108,8 +138,9 @@ class UserController extends Controller
         if (is_null($image)) {
             $defaultImage = "avatar.jpg";
             return $defaultImage;
-        }
+        } else {
             return $image;
+        }
     }
 
     /**
@@ -242,11 +273,15 @@ class UserController extends Controller
 
     public function destroy(string $id): Response
     {
-        try{
+        /*
+         * $user = User::find($id);
+         * $user->delete();
+        */
+//        try{
         user::destroy($id);
-        } catch (Exception $e) {
-            return $this->ApiResponse(Response::HTTP_BAD_REQUEST,null,' something error try again later');
-        }
+//        } catch (Exception $e) {
+//            return $this->ApiResponse(Response::HTTP_BAD_REQUEST,null,' something error try again later');
+//        }
         return $this->ApiResponse(Response::HTTP_MOVED_PERMANENTLY, 'Account deleted successfully');
     }
 }
