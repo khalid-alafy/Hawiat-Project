@@ -10,6 +10,7 @@ class CreateCompaniesTable extends Migration {
 		Schema::create('companies', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('name', 255);
+            $table->string('image')->default('com_avatar.png');
 			$table->string('owner_name', 255);
 			$table->string('email', 255)->unique();
 			$table->string('commercial_register', 10)->unique();
@@ -18,6 +19,7 @@ class CreateCompaniesTable extends Migration {
 			$table->string('tax_record', 11)->unique();
 			$table->string('city', 100);
 			$table->point('location')->nullable();
+			$table->string('bank_account_num');
 			$table->timestamps();
 		});
 	}
