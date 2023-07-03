@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 
@@ -70,3 +71,12 @@ Route::get('unauthorized', function () {
 })->name('unauthorized');
 
 
+
+/*
+|--------------------------------------------------------------------------
+| Branche API Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::apiResource('branches', BranchController::class);
