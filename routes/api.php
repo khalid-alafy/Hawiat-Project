@@ -10,18 +10,19 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RateController;
 
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| API Routes for reviews and rates modues
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
 */
+
+Route::apiResource('reviews', ReviewController::class);
+Route::apiResource('rates', RateController::class);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -103,5 +104,6 @@ Route::get('unauthorized', function () {
         'message' => 'Unauthorized',
     ]);
 })->name('unauthorized');
+
 
 
