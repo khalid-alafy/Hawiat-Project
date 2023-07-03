@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthCompanyController;
 use App\Http\Controllers\CompanyController;
 
 /*
@@ -17,28 +17,56 @@ use App\Http\Controllers\CompanyController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+/*
+|--------------------------------------------------------------------------
+| User API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('user/register',[RegisterController::class, 'userRegister']);
+Route::post('company/register',[RegisterController::class,'companyRegister']);
+
+Route::post('user/login', [LoginController::class, 'userLogin']);
+Route::post('company/login',[LoginController::class, 'companyLogin']);
+
+
 
 /*
 |--------------------------------------------------------------------------
 | User API Routes
 |--------------------------------------------------------------------------
 |
-| User API routes for your application
+*/
+
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::apiResource('users',UserController::class);
+    Route::post('logout',[LoginController::class,'logout']);
+});
+/*
+|--------------------------------------------------------------------------
+| company API Routes
+|--------------------------------------------------------------------------
+|
+*/
+Route::middleware('auth:sanctum')->group( function () {
+    Route::apiResource('companies', CompanyController::class);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Other API Routes
+|--------------------------------------------------------------------------
 |
 */
 
-Route::get('users', [UserController::class, 'index'])->name('users.all');
-Route::post('users', [UserController::class, 'store'])->name('users.create');
-Route::get('users/{id}', [UserController::class, 'show'])->name('userss.user');
-Route::put('users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.delete');
+Route::get('unauthorized', function () {
+    return  response()->json(
+         [
+        'status' => 401,
+        'message' => 'Unauthorized',
+    ]);
+})->name('unauthorized');
 
 
-Route::post('/login',[AuthCompanyController::class,'login']);
-Route::post('/register',[AuthCompanyController::class,'register']);
-Route::post('/logout',[AuthCompanyController::class,'logout']);
-
-Route::apiResource('companies', CompanyController::class);
