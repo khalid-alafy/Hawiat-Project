@@ -135,9 +135,14 @@ class CompanyController extends Controller
    */
   public function destroy($id)
   {
-    $company = Company::findOrFail($id);
-    $company->delete();
-    return response()->json("deleted successfully");
+    $company = Company::find($id);
+    if ($company) {
+      $company->delete();
+      return $this->ApiResponse(Response::HTTP_OK,"Company deleted successfully",null);
+    }
+    else {
+      return $this->ApiResponse(Response::HTTP_BAD_REQUEST,'Company not found!',null);
+  }
 
   }
   

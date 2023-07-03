@@ -29,6 +29,7 @@ class Company extends Authenticatable
         'tax_record',
         'city',
         'location',
+        'bank_account_num',
     ];
 
     protected $casts = [

@@ -14,12 +14,13 @@ class Product extends Model
     protected $fillable = [
         'name',
         'image',
-        'price',
+        'contract_price',
+        'temporary_price',
         'volume',
         'description',
         'tenancy_type',
         'branch_id',
-        'development_id',
+        'department_id',
     ];
 
     public function orders(): HasMany
@@ -34,7 +35,7 @@ class Product extends Model
 
     public function department(): BelongsTo
     {
-        return $this->belongsTo(Deparment::class);
+        return $this->belongsTo(Department::class);
     }
 
 }

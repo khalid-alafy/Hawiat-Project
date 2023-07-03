@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\DepartmentController;
 use Illuminate\Http\Request;
@@ -7,7 +8,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CompanyController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +23,17 @@ use App\Http\Controllers\CompanyController;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Product API Routes
+|--------------------------------------------------------------------------
+|
+*/
+Route::apiResource('products', ProductController::class);
+Route::post('/insertBranchProducts',[ProductController::class,'insertBranchProducts']);
+Route::post('/nearestBranchesProducts',[ProductController::class,'nearestBranchesProducts']);
+Route::post('/searchProduct',[ProductController::class,'searchProduct']);
+Route::get('/companyProducts/{id}',[ProductController::class,'companyProducts']);
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +47,12 @@ Route::post('company/register',[RegisterController::class,'companyRegister']);
 Route::post('user/login', [LoginController::class, 'userLogin']);
 Route::post('company/login',[LoginController::class, 'companyLogin']);
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | User API Routes
 |--------------------------------------------------------------------------
 |
 */
-
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('users',UserController::class);
@@ -71,6 +81,16 @@ Route::middleware('auth:sanctum')->group( function () {
 
 /*
 |--------------------------------------------------------------------------
+| Branche API Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+Route::apiResource('branches', BranchController::class);
+
+/*
+|--------------------------------------------------------------------------
 | Other API Routes
 |--------------------------------------------------------------------------
 |
@@ -85,12 +105,3 @@ Route::get('unauthorized', function () {
 })->name('unauthorized');
 
 
-
-/*
-|--------------------------------------------------------------------------
-| Branche API Routes
-|--------------------------------------------------------------------------
-|
-|
-*/
-Route::apiResource('branches', BranchController::class);
