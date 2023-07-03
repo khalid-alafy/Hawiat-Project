@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +35,7 @@ Route::post('company/login',[LoginController::class, 'companyLogin']);
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | User API Routes
@@ -45,12 +48,23 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('users',UserController::class);
     Route::post('logout',[LoginController::class,'logout']);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Department API Routes
+|--------------------------------------------------------------------------
+*/
+Route::apiResource('departments', DepartmentController::class);
+Route::get('department-products', [DepartmentController::class, 'departmentProducts'])->name('department_products');
+Route::get('department-branches', [DepartmentController::class, 'departmentBranches'])->name('department_branches');
+
 /*
 |--------------------------------------------------------------------------
 | company API Routes
 |--------------------------------------------------------------------------
 |
 */
+
 Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('companies', CompanyController::class);
 });
