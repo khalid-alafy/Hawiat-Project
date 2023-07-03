@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
-class Department extends Model 
+class Department extends Model
 {
 
     protected $table = 'departments';
     public $timestamps = true;
     protected $fillable = [
         'name',
-        'tenancy_type',
+        'tenancy_type',// 0 => contract, 1 =>temporary, 2 => both
         'parent_id',
     ];
 
