@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthCompanyController;
-use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,28 +15,16 @@ use App\Http\Controllers\CompanyController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 /*
 |--------------------------------------------------------------------------
-| User API Routes
+| Order API Routes
 |--------------------------------------------------------------------------
 |
-| User API routes for your application
-|
 */
+Route::post('/payment/initiate', [PaymentController::class, 'initiatPayment']);//->name('payment.initiate');
+Route::get('orders', [OrderController::class, 'index'])->name('orders.all');
+Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.order');
+Route::delete('orders/{id}', [OrderController::class, 'destroy'])->name('orders.delete');
 
-Route::get('users', [UserController::class, 'index'])->name('users.all');
-Route::post('users', [UserController::class, 'store'])->name('users.create');
-Route::get('users/{id}', [UserController::class, 'show'])->name('userss.user');
-Route::put('users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.delete');
-
-
-Route::post('/login',[AuthCompanyController::class,'login']);
-Route::post('/register',[AuthCompanyController::class,'register']);
-Route::post('/logout',[AuthCompanyController::class,'logout']);
-
-Route::apiResource('companies', CompanyController::class);

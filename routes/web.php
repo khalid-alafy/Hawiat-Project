@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/form', function () {
+    return view('form');
+});
+
+Route::post('/payment/initiate', [PaymentController::class, 'initiatePayment'])->name('payment.initiate');
+Route::post('/payment/callback', [PaymentController::class, 'handlePaymentResponse'])->name('payment.return');
+Route::post('orders', [OrderController::class, 'store'])->name('orders.create');

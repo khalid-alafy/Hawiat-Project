@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-
-    "content-hash": "55a4aa1b0479562873d0d8995fa46b52",
+    "content-hash": "2fd12400aa3636c06a18728810f5369d",
     "packages": [
         {
             "name": "brick/math",
@@ -2470,6 +2469,53 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "paytabscom/laravel_paytabs",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paytabscom/paytabs-php-laravel-package.git",
+                "reference": "50c191b4e476b685a987e43bbfe5f0069a8e5c9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paytabscom/paytabs-php-laravel-package/zipball/50c191b4e476b685a987e43bbfe5f0069a8e5c9e",
+                "reference": "50c191b4e476b685a987e43bbfe5f0069a8e5c9e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "type": "composer-package",
+            "autoload": {
+                "psr-4": {
+                    "Paytabscom\\Laravel_paytabs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Walaa Elsaeed",
+                    "email": "w.elsaeed@paytabs.com"
+                }
+            ],
+            "description": "Official laravel package to implement PayTabs integration with laravel apps",
+            "homepage": "https://site.paytabs.com/en/",
+            "keywords": [
+                "E-comerce",
+                "laravel",
+                "payments",
+                "paytabs"
+            ],
+            "support": {
+                "issues": "https://github.com/paytabscom/paytabs-php-laravel-package/issues",
+                "source": "https://github.com/paytabscom/paytabs-php-laravel-package/tree/V1.4.1"
+            },
+            "time": "2023-01-10T20:56:02+00:00"
         },
         {
             "name": "phayes/geophp",
