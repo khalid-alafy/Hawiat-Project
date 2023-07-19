@@ -2,7 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Laravel\Sanctum\Exceptions\MissingAbilityException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +32,23 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    public function render($request, Throwable $exception)
+    {
+        if ( $exception instanceof MissingAbilityException) {
+            return response()->json(['error' => 'Forbidden', 'status' => 403], 403);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            
+            return response()->json(['error' => 'Not found', 'status' => 404], 404);
+        }
+
+        if ($exception instanceof AuthenticationException ) {
+            return response()->json(['error' => 'Unauthorized', 'status' => 401], 401);
+        }
+        return response()->json(['error' => 'internal server error.'.get_class($exception).' - '.$exception->getmessage()], 501);
+
+      
     }
 }
