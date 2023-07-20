@@ -71,8 +71,7 @@ class RegisterController extends Controller
             $input['image'] = $defaultImage;
         }
         $user = User::create($input);
-
-        $success['token'] =  $user->createToken('API_Token')->plainTextToken;
+        $success['token'] =  $user->createToken('API_Token',['user'])->plainTextToken;
         $success['name'] =  $user->name;
 
         return $this->ApiResponse(Response::HTTP_OK, $success['name']. ' registered successfully.',null, $success ['token']);
@@ -141,7 +140,7 @@ class RegisterController extends Controller
         $validatedData['location'] = new Point($latitude, $longitude);
         $company = Company::create($validatedData);
 
-        $success['token'] =  $company->createToken('API_Token')->plainTextToken;
+        $success['token'] =  $company->createToken('API_Token',['company'])->plainTextToken;
         $success['name'] =  $company->name;
 
         return $this->ApiResponse(Response::HTTP_OK, $success['name']. ' registered successfully.',null, $success ['token']);

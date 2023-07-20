@@ -72,8 +72,8 @@ class LoginController extends  Controller
 
     public function logout()
     {
-        $admin = auth('sanctum')->user();
-        $admin->tokens()->where('id', $admin->currentAccessToken()->id)->delete();
+        $user = auth('sanctum')->user();
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
         return $this->ApiResponse(Response::HTTP_OK, 'user logged out successfully', null);
     }
 }
