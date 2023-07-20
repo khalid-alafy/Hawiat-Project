@@ -34,13 +34,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'phone', 'image', 'location', 'role', 'suspend',
     ];
-
+    protected $guard = 'user';
+    protected $table = 'users';
     protected $hidden = [
         "created_at", "updated_at", 'password', 'remember_token',
     ];
     protected $casts = [
-//            'email_verified_at' => 'datetime',
-//            'password' => 'hashed',
         'location' => Point::class,
     ];
 

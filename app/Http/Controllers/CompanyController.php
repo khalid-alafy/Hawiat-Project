@@ -7,7 +7,8 @@ use MatanYadaev\EloquentSpatial\Objects\Point;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use Illuminate\Validation\Rule;
-
+use App\Notifications\OrderCreatedNotification;
+use Illuminate\Support\Facades\Notification;
 
 class CompanyController extends Controller 
 {
@@ -53,6 +54,7 @@ class CompanyController extends Controller
         'tax_record' => 'required',
         'city' => 'required',
         'location' => 'required',
+        'bank_account_num' => 'required',
     ]);
 
       // Create a new company
@@ -62,9 +64,14 @@ class CompanyController extends Controller
       $longitude = $validatedData['location']['longitude'];
       
       $validatedData['location'] = new Point($latitude, $longitude);
-      
+      // return $validatedData;0
       $company = Company::create($validatedData);
- 
+      //notify admin
+      $user = auth('sanctum')->user(); // Assuming the user is authenticated
+      
+      Notification::send($user, new OrderCreatedNotification);
+
+
       return response()->json($company, 201);
   }
 
@@ -78,8 +85,10 @@ class CompanyController extends Controller
   {
     // Retrieve a specific company
         $company = Company::findOrFail($id);
+        $user = auth('sanctum')->user(); // Assuming the user is authenticated
+        $notifications = $user->notifications()->get();
 
-        return response()->json($company);
+        return response()->json($notifications);
   }
 
   /**
@@ -135,9 +144,14 @@ class CompanyController extends Controller
    */
   public function destroy($id)
   {
-    $company = Company::findOrFail($id);
-    $company->delete();
-    return response()->json("deleted successfully");
+    $company = Company::find($id);
+    if ($company) {
+      $company->delete();
+      return $this->ApiResponse(Response::HTTP_OK,"Company deleted successfully",null);
+    }
+    else {
+      return $this->ApiResponse(Response::HTTP_BAD_REQUEST,'Company not found!',null);
+  }
 
   }
   
