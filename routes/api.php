@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DepartmentController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
@@ -79,10 +81,15 @@ Route::middleware('auth:sanctum')->group( function () {
 
 /*
 |--------------------------------------------------------------------------
-| User API Routes
+| Order API Routes
 |--------------------------------------------------------------------------
 |
 */
+Route::post('/payment/initiate', [PaymentController::class, 'initiatPayment']);//->name('payment.initiate');
+Route::get('orders', [OrderController::class, 'index'])->name('orders.all');
+Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.order');
+Route::delete('orders/{id}', [OrderController::class, 'destroy'])->name('orders.delete');
+
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('users',UserController::class)->middleware(['abilities:user']);
@@ -121,4 +128,3 @@ Route::middleware('auth:sanctum')->group(function () {
         return auth('sanctum')->user();
     });
 });
-

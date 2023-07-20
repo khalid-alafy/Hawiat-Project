@@ -7,12 +7,15 @@ class CreatePaymentsTable extends Migration {
 
 	public function up()
 	{
+        //The respCode, respStatus, and respMessage
 		Schema::create('payments', function(Blueprint $table) {
 			$table->increments('id');
-			$table->enum('type', array('paytab', 'paypal','stribe'));
-			$table->enum('status', array('successful', 'failed', 'pending'));
-			$table->string('transaction_code', 255)->unique();
+            $table->enum('payment_status', array('success', 'failed', 'pending'));
+            $table->text('payment_response')->nullable(); // Store the complete PayTabs payment response JSON for reference
+            $table->string('tran_ref')->unique();
 			$table->timestamps();
+			$table->integer('user_id')->unsigned(); // If you have user authentication and want to associate payments with users
+			$table->integer('order_id')->unsigned();
 		});
 	}
 
