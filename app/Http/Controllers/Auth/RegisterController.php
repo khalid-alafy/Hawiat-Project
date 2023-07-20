@@ -71,7 +71,6 @@ class RegisterController extends Controller
             $input['image'] = $defaultImage;
         }
         $user = User::create($input);
-
         $success['token'] =  $user->createToken('API_Token',['user'])->plainTextToken;
         $success['name'] =  $user->name;
 
